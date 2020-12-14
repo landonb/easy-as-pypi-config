@@ -1,11 +1,11 @@
 .. ##########################
-.. easy-as-pypi Documentation
+.. easy-as-pypi-config Documentation
 .. ##########################
 
-.. .. |easy-as-pypi| replace:: ``easy-as-pypi``
-.. .. _easy-as-pypi: https://github.com/landonb/easy-as-pypi
+.. .. |easy-as-pypi-config| replace:: ``easy-as-pypi-config``
+.. .. _easy-as-pypi-config: https://github.com/tallybark/easy-as-pypi-config
 
-.. Documentation for |easy-as-pypi|_.
+.. Documentation for |easy-as-pypi-config|_.
 
 .. .. toctree::
 ..    :maxdepth: 4

@@ -1,10 +1,10 @@
-# This file exists within 'easy-as-pypi':
+# This file exists within 'easy-as-pypi-config':
 #
-#   https://github.com/landonb/easy-as-pypi#🥧
+#   https://github.com/tallybark/easy-as-pypi-config#🍐
 
 # Travis CI config.
 #
-#   https://travis-ci.com/landonb/easy-as-pypi
+#   https://travis-ci.com/tallybark/easy-as-pypi-config
 
 language: python
 

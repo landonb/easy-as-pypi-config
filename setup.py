@@ -1,6 +1,6 @@
-# This file exists within 'easy-as-pypi':
+# This file exists within 'easy-as-pypi-config':
 #
-#   https://github.com/landonb/easy-as-pypi#🥧
+#   https://github.com/tallybark/easy-as-pypi-config#🍐
 
 """
 Packaging instruction for setup tools.
@@ -39,9 +39,9 @@ setup(
 
     # Specify which package(s) to install.
     # - Without any rules, find_packages returns, e.g.,
-    #     ['easy_as_pypi', 'tests', 'tests.easy_as_pypi']
+    #     ['easy_as_pypi_config', 'tests', 'tests.easy_as_pypi_config']
     # - With the 'exclude*' rule, this call is essentially:
-    #     packages=['easy_as_pypi']
+    #     packages=['easy_as_pypi_config']
     # MEH/2020-01-24: (lb): I saw 'docs' included in another projects'
     # find_packages -- but I'd guess we don't need. (It also had no
     # glob*.) E.g.,

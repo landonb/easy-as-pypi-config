@@ -1,6 +1,6 @@
-# This file exists within 'easy-as-pypi':
+# This file exists within 'easy-as-pypi-config':
 #
-#   https://github.com/landonb/easy-as-pypi#🥧
+#   https://github.com/tallybark/easy-as-pypi-config#🍐
 
 codecov:
   branch: develop
@@ -20,7 +20,7 @@ codecov:
 # Specify the GitHub project directory path prefix so that clicking source
 # files in codecov.io opens the coverage browser.
 fixes:
-  - "::easy_as_pypi/"
+  - "::easy_as_pypi_config/"
 
 coverage:
   # precision: 0 | 2
