@@ -22,28 +22,34 @@
 # TORT OR OTHERWISE,  ARISING FROM,  OUT OF  OR IN  CONNECTION WITH THE
 # SOFTWARE   OR   THE   USE   OR   OTHER   DEALINGS  IN   THE  SOFTWARE.
 
-"""Provides CLI runner() test fixture, for interacting with Click app."""
+"""easy_as_pypi_config sub.package provides Carousel UX user configuration settings."""
 
-import pytest
+from config_decorator.config_decorator import ConfigDecorator
 
-pytest_plugins = (
-    # *** External fixtures.
+from .fileboss import create_configobj
 
-    # Import tmp_appdirs fixture.
-    'easy_as_pypi_apppth.test_mock',
-
-    # *** Internal fixtures.
-
-    # Import config_instance fixture.
-    'tests.fixtures.config_instance',
-    # Import config_root fixture.
-    'tests.fixtures.config_root',
-    # Import fixtures: filename, filepath.
-    'tests.fixtures.file_fakes',
+__all__ = (
+    'decorate_and_wrap',
 )
 
 
-@pytest.fixture
-def app_name():
-    return 'easy-as-pypi-config-tests'
+def decorate_and_wrap(section_name, section_cdec, complete=False):
+    def _decorate_and_wrap():
+        # Sink the section once so we can get ConfigObj to print
+        # the leading [section_name].
+        condec = ConfigDecorator.create_root_for_section(section_name, section_cdec)
+        return wrap_in_configobj(condec, complete=complete)
+
+    def wrap_in_configobj(condec, complete=False):
+        config_obj = create_configobj(conf_path=None)
+        # Set skip_unset so none of the default values are spit out (keeps the
+        # config more concise); and set keep_empties so empty sections are spit
+        # out (so, e.g., `[default]` at least appears).
+        config_obj.merge(condec.as_dict(
+            skip_unset=not complete,
+            keep_empties=not complete,
+        ))
+        return config_obj
+
+    return _decorate_and_wrap()
 

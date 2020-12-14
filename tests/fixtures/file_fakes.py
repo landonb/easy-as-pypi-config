@@ -22,28 +22,20 @@
 # TORT OR OTHERWISE,  ARISING FROM,  OUT OF  OR IN  CONNECTION WITH THE
 # SOFTWARE   OR   THE   USE   OR   OTHER   DEALINGS  IN   THE  SOFTWARE.
 
-"""Provides CLI runner() test fixture, for interacting with Click app."""
+import os
 
+import fauxfactory
 import pytest
-
-pytest_plugins = (
-    # *** External fixtures.
-
-    # Import tmp_appdirs fixture.
-    'easy_as_pypi_apppth.test_mock',
-
-    # *** Internal fixtures.
-
-    # Import config_instance fixture.
-    'tests.fixtures.config_instance',
-    # Import config_root fixture.
-    'tests.fixtures.config_root',
-    # Import fixtures: filename, filepath.
-    'tests.fixtures.file_fakes',
-)
 
 
 @pytest.fixture
-def app_name():
-    return 'easy-as-pypi-config-tests'
+def filename():
+    """Provide a filename string."""
+    return fauxfactory.gen_utf8()
+
+
+@pytest.fixture
+def filepath(tmpdir, filename):
+    """Provide a fully qualified pathame within our tmp-dir."""
+    return os.path.join(tmpdir.strpath, filename)
 

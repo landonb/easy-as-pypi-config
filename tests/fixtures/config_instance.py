@@ -22,28 +22,44 @@
 # TORT OR OTHERWISE,  ARISING FROM,  OUT OF  OR IN  CONNECTION WITH THE
 # SOFTWARE   OR   THE   USE   OR   OTHER   DEALINGS  IN   THE  SOFTWARE.
 
-"""Provides CLI runner() test fixture, for interacting with Click app."""
+import os
+
+from configobj import ConfigObj
 
 import pytest
 
-pytest_plugins = (
-    # *** External fixtures.
-
-    # Import tmp_appdirs fixture.
-    'easy_as_pypi_apppth.test_mock',
-
-    # *** Internal fixtures.
-
-    # Import config_instance fixture.
-    'tests.fixtures.config_instance',
-    # Import config_root fixture.
-    'tests.fixtures.config_root',
-    # Import fixtures: filename, filepath.
-    'tests.fixtures.file_fakes',
-)
-
 
 @pytest.fixture
-def app_name():
-    return 'easy-as-pypi-config-tests'
+def config_instance(tmpdir, faker):
+    """Provide a (dynamicly generated) ConfigObj instance."""
+
+    def generate_config(**kwargs):
+        cfg_dict = generate_dict(**kwargs)
+        # NOPE: You'd overwrite your user's file with the default path:
+        #   from easy_as_pypi_config.fileboss import default_config_path
+        #   configfile_path = default_config_path()
+        configfile_path = os.path.join(tmpdir, 'easy-as-pypi-config-test.conf')
+        config = ConfigObj(configfile_path)
+        config.merge(cfg_dict)
+        return config
+
+    # ***
+
+    def generate_dict(**kwargs):
+        cfg_dict = {}
+
+        # ***
+
+        cfg_foo = {}
+        cfg_dict['foo'] = cfg_foo
+
+        cfg_foo.setdefault('bar', kwargs.get('bar', 'baz'))
+
+        # ***
+
+        return cfg_dict
+
+    # ***
+
+    return generate_config
 

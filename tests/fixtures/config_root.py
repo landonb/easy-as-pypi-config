@@ -22,28 +22,50 @@
 # TORT OR OTHERWISE,  ARISING FROM,  OUT OF  OR IN  CONNECTION WITH THE
 # SOFTWARE   OR   THE   USE   OR   OTHER   DEALINGS  IN   THE  SOFTWARE.
 
-"""Provides CLI runner() test fixture, for interacting with Click app."""
-
 import pytest
 
-pytest_plugins = (
-    # *** External fixtures.
-
-    # Import tmp_appdirs fixture.
-    'easy_as_pypi_apppth.test_mock',
-
-    # *** Internal fixtures.
-
-    # Import config_instance fixture.
-    'tests.fixtures.config_instance',
-    # Import config_root fixture.
-    'tests.fixtures.config_root',
-    # Import fixtures: filename, filepath.
-    'tests.fixtures.file_fakes',
-)
+from config_decorator import section
 
 
 @pytest.fixture
-def app_name():
-    return 'easy-as-pypi-config-tests'
+def basic_config_root():
+
+    @section(None)
+    class ConfigRoot(object):
+        pass
+
+    @ConfigRoot.section('foo')
+    class ConfigurableFoo(object):
+
+        @property
+        @ConfigRoot.setting("foo.bar option")
+        def bar(self):
+            return ''
+
+        @property
+        @ConfigRoot.setting("hidden option", hidden=True)
+        def boo(self):
+            return ''
+
+    @ConfigRoot.section('baz')
+    class ConfigurableFoo(object):
+        pass
+
+    return ConfigRoot
+
+
+@pytest.fixture()
+def basic_config_file(filepath):
+    with open(filepath, 'w') as conf_file:
+        conf_file.write(
+            """
+[foo]
+bar = 'baz'
+bat = 123
+
+[quux]
+qiix = 'foo'
+""".lstrip()
+        )
+    return filepath
 

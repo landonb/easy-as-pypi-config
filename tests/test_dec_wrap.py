@@ -22,28 +22,19 @@
 # TORT OR OTHERWISE,  ARISING FROM,  OUT OF  OR IN  CONNECTION WITH THE
 # SOFTWARE   OR   THE   USE   OR   OTHER   DEALINGS  IN   THE  SOFTWARE.
 
-"""Provides CLI runner() test fixture, for interacting with Click app."""
-
-import pytest
-
-pytest_plugins = (
-    # *** External fixtures.
-
-    # Import tmp_appdirs fixture.
-    'easy_as_pypi_apppth.test_mock',
-
-    # *** Internal fixtures.
-
-    # Import config_instance fixture.
-    'tests.fixtures.config_instance',
-    # Import config_root fixture.
-    'tests.fixtures.config_root',
-    # Import fixtures: filename, filepath.
-    'tests.fixtures.file_fakes',
-)
+from easy_as_pypi_config.dec_wrap import decorate_and_wrap
 
 
-@pytest.fixture
-def app_name():
-    return 'easy-as-pypi-config-tests'
+def test_decorate_and_wrap_with_complete(basic_config_root):
+    config_obj = decorate_and_wrap(
+        section_name='a-test!', section_cdec=basic_config_root, complete=True,
+    )
+    assert config_obj.dict() == {'a-test!': {'foo': {'bar': ''}}}
+
+
+def test_decorate_and_wrap_sans_complete(basic_config_root):
+    config_obj = decorate_and_wrap(
+        section_name='a-test!', section_cdec=basic_config_root, complete=False,
+    )
+    assert config_obj.dict() == {'a-test!': {}}
 

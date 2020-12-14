@@ -22,28 +22,16 @@
 # TORT OR OTHERWISE,  ARISING FROM,  OUT OF  OR IN  CONNECTION WITH THE
 # SOFTWARE   OR   THE   USE   OR   OTHER   DEALINGS  IN   THE  SOFTWARE.
 
-"""Provides CLI runner() test fixture, for interacting with Click app."""
-
-import pytest
-
-pytest_plugins = (
-    # *** External fixtures.
-
-    # Import tmp_appdirs fixture.
-    'easy_as_pypi_apppth.test_mock',
-
-    # *** Internal fixtures.
-
-    # Import config_instance fixture.
-    'tests.fixtures.config_instance',
-    # Import config_root fixture.
-    'tests.fixtures.config_root',
-    # Import fixtures: filename, filepath.
-    'tests.fixtures.file_fakes',
-)
+from easy_as_pypi_config.echo_cfg import echo_config_decorator_table
 
 
-@pytest.fixture
-def app_name():
-    return 'easy-as-pypi-config-tests'
+def test_echo_config_decorator_table(basic_config_root, capsys, mocker):
+    render_results = mocker.MagicMock()
+    basic_config_root['foo']['bar'] = 123
+    echo_config_decorator_table(
+        cfg_decors=[basic_config_root],
+        include_hidden=False,
+        render_results=render_results,
+    )
+    assert render_results.called
 

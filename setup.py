@@ -19,11 +19,31 @@ from setuptools import find_packages, setup
 # *** Package requirements.
 
 requirements = [
-    # YOU: Add your project-specific requirements here.
+    # INI/config parser, even better (preserves comments and ordering).
+    #  https://github.com/DiffSK/configobj
+    #  https://configobj.readthedocs.io/en/latest/
+    'configobj >= 5.0.6, < 6',
 
-    # (lb): Click for life.
+    # *** HOTH packages.
+
+    # (lb): Click fate.
     #  https://github.com/pallets/click
-    'click >= 7.0, < 8',
+    #   'click >= 7.0, < 8',
+    # But instead a Click fork with subtle tweaks.
+    #  https://github.com/hotoffthehamster/click
+    'click-hotoffthehamster >= 7.1.1, <= 7.1.2',
+
+    # Pythonic config @decorator.
+    #  https://github.com/hotoffthehamster/config-decorator
+    'config-decorator > 2.0.14, < 2.0.16',  # I.e., release 2.0.15, or working.
+
+    # ActiveState/appdirs + Singleton (app-wide access w/out appname) + `mkdir -p`.
+    #  https://github.com/tallybark/easy-as-pypi-apppth#🛣
+    'easy-as-pypi-apppth',
+
+    # Click + ansi_escape_room (color) + convenience.
+    #  https://github.com/tallybark/easy-as-pypi-termio#🍉
+    'easy-as-pypi-termio',
 ]
 
 # *** Minimal setup() function -- Prefer using config where possible.
